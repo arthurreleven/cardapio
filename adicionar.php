@@ -1,109 +1,127 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Adicionar Prato</title>
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> <link rel="apple-touch-icon" href="/apple-touch-icon.png"> <style>
-        /* Estilos base do body, semelhantes ao listar.php */
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style>
         body {
             font-family: Arial, sans-serif;
             padding: 2em;
             background-color: #f9f9f9;
-            color: #333; /* Cor do texto padrão */
-            line-height: 1.6; /* Melhorar legibilidade */
+            color: #333;
+            line-height: 1.6;
         }
         h1 {
             color: #333;
-            margin-bottom: 1.5em; /* Espaço abaixo do título */
+            margin-bottom: 1.5em;
+            text-align: center;
         }
-        /* Estilização do formulário */
         form {
             background: #fff;
             border: 1px solid #ddd;
-            padding: 25px;
-            border-radius: 8px; /* Bordas arredondadas */
-            max-width: 500px; /* Largura máxima para o formulário */
-            margin: 0 auto; /* Centraliza o formulário na página */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sutil sombra */
+            padding: 25px 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
         }
-        /* Estilização das labels (rótulos) */
         label {
-            display: block; /* Cada label em uma nova linha */
-            margin-bottom: 1em; /* Espaço abaixo de cada label */
-            font-weight: bold; /* Deixa o texto do rótulo em negrito */
+            font-weight: bold;
             color: #555;
+            margin-bottom: 0.4em;
+            margin-top: 1em;
         }
-        /* Estilização dos campos de input e textarea */
         input[type="text"],
         input[type="number"],
-        textarea {
-            width: calc(100% - 20px); /* Ocupa quase 100% da largura do pai menos o padding */
+        textarea,
+        select {
             padding: 10px;
-            margin-top: 5px; /* Espaço entre label e input */
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1em;
-            box-sizing: border-box; /* Garante que padding e borda não aumentem a largura total */
+            box-sizing: border-box;
+            width: 100%;
+            transition: border-color 0.2s ease;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #28a745;
+            outline: none;
         }
         textarea {
-            resize: vertical; /* Permite redimensionar apenas verticalmente */
-            min-height: 80px; /* Altura mínima para a textarea */
+            resize: vertical;
+            min-height: 80px;
         }
-        /* Estilização do botão Salvar, semelhante ao listar.php */
         button[type="submit"] {
+            margin-top: 2em;
+            padding: 12px;
             background: #28a745;
             color: white;
-            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             font-size: 1.1em;
             cursor: pointer;
-            transition: background 0.3s ease; /* Transição suave de cor ao passar o mouse */
-            margin-top: 1em; /* Espaço acima do botão */
+            transition: background 0.3s ease;
         }
         button[type="submit"]:hover {
             background: #218838;
         }
-        /* Estilização do link "Voltar ao cardápio" */
         p a {
             display: inline-block;
-            margin-top: 2em; /* Espaço acima do link */
-            background: #007bff; /* Cor azul para o botão de voltar */
+            margin-top: 2em;
+            background: #007bff;
             color: white;
             padding: 10px 15px;
             text-decoration: none;
             border-radius: 4px;
             transition: background 0.3s ease;
+            text-align: center;
+            max-width: 150px;
+            margin-left: auto;
+            margin-right: auto;
         }
         p a:hover {
-            background: #0056b3; /* Azul mais escuro ao passar o mouse */
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
     <?php
-    // Bloco PHP para preencher os campos do formulário, se houver dados na URL
     $nome = isset($_GET['nome']) ? htmlspecialchars($_GET['nome']) : '';
     $descricao = isset($_GET['descricao']) ? htmlspecialchars($_GET['descricao']) : '';
     $tempo = isset($_GET['tempo']) ? (int) $_GET['tempo'] : '';
     $preco = isset($_GET['preco']) ? htmlspecialchars($_GET['preco']) : '';
+    $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
     ?>
 
     <h1>Adicionar novo prato</h1>
     <form method="POST" action="salvar.php">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" value="<?= $nome ?>" required><br>
+        <input type="text" id="nome" name="nome" value="<?= $nome ?>" required />
 
         <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" required rows="4" cols="40"><?= $descricao ?></textarea><br>
+        <textarea id="descricao" name="descricao" required rows="4"><?= $descricao ?></textarea>
 
         <label for="tempo">Tempo de preparo (min):</label>
-        <input type="number" id="tempo" name="tempo" value="<?= $tempo ?>" required><br>
+        <input type="number" id="tempo" name="tempo" value="<?= $tempo ?>" required />
 
         <label for="preco">Preço (R$):</label>
-        <input type="number" step="0.01" id="preco" name="preco" value="<?= $preco ?>" required><br>
+        <input type="number" step="0.01" id="preco" name="preco" value="<?= $preco ?>" required />
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="" disabled <?= $tipo === '' ? 'selected' : '' ?>>Selecione o tipo</option>
+            <option value="salgado" <?= $tipo === 'salgado' ? 'selected' : '' ?>>Salgado</option>
+            <option value="sobremesa" <?= $tipo === 'sobremesa' ? 'selected' : '' ?>>Sobremesa</option>
+        </select>
 
         <button type="submit">Salvar</button>
     </form>

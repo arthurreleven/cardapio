@@ -10,7 +10,7 @@
             padding: 2em;
             background-color: #f9f9f9;
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
         ul {
@@ -43,14 +43,31 @@
     <a href="../adicionar.php">Adicionar novo prato</a>
 
     <?php if (!empty($pratos)): ?>
+        <h2>Pratos Salgados</h2>
         <ul>
             <?php foreach ($pratos as $prato): ?>
-                <li>
-                    <strong><?= htmlspecialchars($prato->nome) ?></strong><br>
-                    <?= nl2br(htmlspecialchars($prato->descricao)) ?><br>
-                    Tempo: <?= (int)$prato->tempo_preparo ?> min<br>
-                    Preço: R$ <?= number_format($prato->preco, 2, ',', '.') ?>
-                </li>
+                <?php if ($prato->tipo === 'salgado'): ?>
+                    <li>
+                        <strong><?= htmlspecialchars($prato->nome) ?></strong><br>
+                        <?= nl2br(htmlspecialchars($prato->descricao)) ?><br>
+                        Tempo: <?= (int)$prato->tempo_preparo ?> min<br>
+                        Preço: R$ <?= number_format($prato->preco, 2, ',', '.') ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+
+        <h2>Sobremesas</h2>
+        <ul>
+            <?php foreach ($pratos as $prato): ?>
+                <?php if ($prato->tipo === 'sobremesa'): ?>
+                    <li>
+                        <strong><?= htmlspecialchars($prato->nome) ?></strong><br>
+                        <?= nl2br(htmlspecialchars($prato->descricao)) ?><br>
+                        Tempo: <?= (int)$prato->tempo_preparo ?> min<br>
+                        Preço: R$ <?= number_format($prato->preco, 2, ',', '.') ?>
+                    </li>
+                <?php endif; ?>
             <?php endforeach; ?>
         </ul>
     <?php else: ?>

@@ -5,4 +5,5 @@ class PratoDoCardapio {
     public $descricao;
     public $tempo_preparo;
     public $preco;
+	public $tipo;
 }

@@ -4,7 +4,7 @@ class ConnectionFactory {
         $host = 'localhost';
         $dbname = 'restaurante';
         $user = 'root';
-        $pass = '0405';
+        $pass = '1234';
 
         try {
             return new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass, [
